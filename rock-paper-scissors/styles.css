@@ -1,0 +1,86 @@
+.user, .computer {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+#userChoices {
+    display: flex;
+    justify-content: center;
+    padding: 25px;
+    background-color: rgb(242, 242, 242);
+}
+
+.buttonGame {
+    font-size: 40px;
+    padding: 15px 50px;
+    border-radius: 25px;
+    opacity: 0.9;
+    background-color: rgb(161, 177, 177);
+    transition: 0.3s;
+    margin-left: 48px;
+}
+.buttonGame:hover {
+    background-color: rgb(209, 230, 230);
+    opacity: 1;
+    box-shadow: 0px 0px 30px 5px rgba(99, 99, 99, 0.281);
+}
+.buttonGame:active {
+    box-shadow: 0px 0px 30px 5px rgba(99, 99, 99, 0.281);
+    transform: scale(1.05);
+}
+
+.namesAndScores {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 25px;
+}
+
+.userAndPoints {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 50px;
+}
+
+.userPoints, .computerPoints {
+    margin-top: 20px;
+}
+
+.computerAndPoints {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 50px;
+}
+
+.winOrLose {
+    display: flex;
+    justify-content: center;
+    font-size: 50px;
+    margin: 40px 0px 40px 0px;
+}
+
+.reset {
+    border-radius: 25px;
+    padding: 15px 50px;
+    font-size: 35px;
+    opacity: 0.9;
+    background-color: rgb(161, 177, 177);
+    transition: 0.3s;
+}
+
+.resetButton {
+    display: flex;
+    justify-content: center;
+    margin-top: 35px;
+}
+
+.reset:hover {
+    background-color: rgb(209, 230, 230);
+    opacity: 1;
+    box-shadow: 0px 0px 30px 5px rgba(99, 99, 99, 0.281);
+
+}
+.reset:active {
+    box-shadow: 0px 0px 30px 5px rgba(99, 99, 99, 0.281);
+    transform: scale(1.05);
+}

@@ -1,105 +1,109 @@
-function game () {
+// Declare all game buttons. Used in endGame for disabling.
+rockbtn = document.querySelector("#rock");
+scissorsbtn = document.querySelector("#scissors");
+paperbtn = document.querySelector("#paper");
 
-    // Chooses the computer's choice
-    function computerPlay() {
-        return Math.floor(Math.random() * 3 + 1);
+// Declare all game buttons from same class, used for looping through the nodelist using forEach in buttomsToChooseFrom.
+const buttonsToChooseFrom = document.querySelectorAll(".buttonGame");
+
+// Declare userPoints. Displays the score of the user. userScore holds the points.
+const userPoints = document.querySelector(".userPoints");
+let userScore = 0;
+document.querySelector(".userPoints").style.fontFamily = "Helvetica, Arial, Sanf-serif";
+document.querySelector(".computerPoints").style.fontFamily = "Helvetica, Arial, Sanf-serif";
+document.querySelector(".winOrLose").style.fontFamily = "Helvetica, Arial, Sanf-serif";
+
+
+// Declare computerPoints. Displays the score of the computer. computerPoints holds the points.
+const computerPoints = document.querySelector(".computerPoints");
+let computerScore = 0;
+
+// Declare winOrLose. Used for checking who won and displaying it.
+const winOrLose = document.querySelector(".winOrLose");
+
+// Declare the reset button.
+const resetGame = document.querySelector(".reset");
+
+resetGame.disabled = true;
+
+// All the logic for the 3 game buttons.
+buttonsToChooseFrom.forEach((buttonGame) => {
+    buttonGame.addEventListener("click", (e) => {
+        let computerChoice = computerPlay();
+        let playRoundResult = playRound(buttonGame.id, computerChoice)
+
+        if (playRoundResult === "win") {
+            userPoints.textContent = ++userScore;
+            winOrLose.textContent = "You won!";
+            endGame(userPoints.textContent, computerPoints.textContent);
+            return "win";
+        } else if (playRoundResult === "tie") {
+            winOrLose.textContent = "Tie!";
+            return "tie";
+        } else if (playRoundResult === "lose") {
+            computerPoints.textContent = ++computerScore;
+            winOrLose.textContent = "You lost!";
+            endGame(userPoints.textContent, computerPoints.textContent);
+            return "lose";
+        }
+    });
+})
+
+// Function that determines who won an individual round.
+function playRound(playerSelection, computerSelection) {
+    if ((playerSelection === "rock" && computerSelection === "scissors") ||
+        (playerSelection === "paper" && computerSelection === "rock") ||
+        (playerSelection === "scissors" && computerSelection === "paper")) {
+        return "win";
+    } else if (playerSelection === computerSelection) {
+        return "tie";
+    } else {
+        return "lose";
     }
-
-    // Plays a round of RPS -> Shows an alert and returns the result as -1, 0 or 1
-    function playRound (playerSelection, computerSelection) {
-        if (playerSelection === "rock" && computerSelection === 1) {
-            alert("Rock on rock doesn't work, tie!");
-            return 0;
-        }
-        else if (playerSelection === "rock" && computerSelection === 2) {
-            alert("Paper beats rock, you lose!");
-            return -1;
-        }
-        else if (playerSelection === "rock" && computerSelection === 3) {
-            alert("Rock beats scissors, you win!");
-            return 1;
-        }
-        else if (playerSelection === "paper" && computerSelection === 1) {
-            alert("Paper beats rock, you win!");
-            return 1;
-        }
-        else if (playerSelection === "paper" && computerSelection === 2) {
-            alert("Paper on paper doesn't work, tie!");
-            return 0;
-        }
-        else if (playerSelection === "paper" && computerSelection === 3) {
-            alert("Scissors beats paper, you lose!");
-            return -1;
-        }
-        else if (playerSelection === "scissors" && computerSelection === 1) {
-            alert("Rock beats scissors, you lose!");
-            return -1;
-        }
-        else if (playerSelection === "scissors" && computerSelection === 2) {
-            alert("Scissors beats paper, you win!");
-            return 1;
-        }
-        else if (playerSelection === "scissors" && computerSelection === 3) {
-            alert("Scissors on scissors doesn't work, tie!");
-            return 0;
-        }
-    }
-
-    function checkChoice(wrongChoice) {
-        if(!userChoices.includes(wrongChoice)) {
-        alert("You must choose either rock, paper or scissors.");
-        while (checkChoice !== true) {
-            userInput();
-            checkChoice(playerSelection);
-            return;
-            }
-        }
-        return true;
-    }
-
-    function userInput() {
-    playerSelection = prompt("Rock, paper or scissors?").toLowerCase();
-    }
-
-    let userChoices = ["rock", "paper", "scissors"];
-
-    userInput();
-    checkChoice(playerSelection);
-
-        console.log("The player's choice was: " + playerSelection)
-    // Computer's choice + console logging the result
-    let computerSelection = computerPlay();
-        console.log("The computer's choice was: " + computerPlay())
-
-    // playRound(playerSelection, computerSelection);
-    // console.log("playRound returns: " + playRound(playerSelection, computerSelection))
-    
-    return playRound(playerSelection, computerSelection);
 }
 
-let user_wins = 0;
-let computer_wins = 0;
-
-for (i=1; i<=5; i++) {
-    let result = game();
-        if (result === 1) {
-            user_wins = user_wins + 1;
-                console.log("User won");
-        } else if (result === -1) {
-            computer_wins = computer_wins + 1;
-                console.log("Computer won");
-        } else {console.log("tie");}
+// Function that determines what the computer chooses.
+function computerPlay() {
+    if (Math.floor(Math.random() * 3 + 1) === 1) {
+        return "rock";
+    } else if (Math.floor(Math.random() * 3 + 1) === 2) {
+        return "paper";
+    } else if (Math.floor(Math.random() * 3 + 1) === 3) {
+        return "scissors";
+    }
 }
 
-console.log("============================================");
-console.log("The result of the match is:");
-
-console.log("User's score: " + user_wins);
-console.log("Computer's score: " + computer_wins);
-
-if (computer_wins > user_wins) {
-    console.log("The computer won!");
-    } else if (user_wins > computer_wins) {
-    console.log("You won!");
-    } else {console.log("It's a tie!")
+// Function that determines if the game is over and what to do if it is.
+function endGame(userScore, computerScore) {
+    if (userScore === "5") {
+        rockbtn.disabled = true;
+        scissorsbtn.disabled = true;
+        paperbtn.disabled = true;
+        winOrLose.textContent = "You won the game!";
+        resetGame.disabled = false;
+    }
+    else if (computerScore === "5") {
+        rockbtn.disabled = true;
+        scissorsbtn.disabled = true;
+        paperbtn.disabled = true;
+        winOrLose.textContent = "The computer beat you!";
+        resetGame.disabled = false;
+    }
+    else {
+        resetGame.disabled = true;
+    }
 }
+
+// Listener for the reset button. When clicked resets the entire game back to start.
+resetGame.addEventListener("click", (e) => {
+    rockbtn.disabled = false;
+    scissorsbtn.disabled = false;
+    paperbtn.disabled = false;
+    userScore = 0;
+    userPoints.textContent = 0;
+    computerScore = 0;
+    computerPoints.textContent = 0;
+    winOrLose.textContent = "Let's Play!";
+    resetGame.disabled = true;
+
+})
